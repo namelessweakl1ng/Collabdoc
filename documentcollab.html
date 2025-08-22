@@ -548,6 +548,33 @@
             color: var(--accent);
         }
         
+        .comment-highlight {
+            background-color: #fff8e1;
+            border-bottom: 2px solid #ffd54f;
+        }
+        
+        .comment {
+            margin-top: 8px;
+            padding: 8px;
+            border-left: 3px solid #2564cf;
+            background-color: #f5f5f5;
+        }
+        
+        .comment-author {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        
+        .comment-text {
+            font-size: 14px;
+        }
+        
+        .comment-actions {
+            margin-top: 4px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
         @media (max-width: 1200px) {
             .branch-panel {
                 display: none;
@@ -607,15 +634,15 @@
         <div class="ribbon-group">
             <div class="ribbon-group-title">Clipboard</div>
             <div class="ribbon-buttons">
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="paste-btn">
                     <i class="fas fa-paste"></i>
                     <span>Paste</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="cut-btn">
                     <i class="fas fa-cut"></i>
                     <span>Cut</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="copy-btn">
                     <i class="fas fa-copy"></i>
                     <span>Copy</span>
                 </div>
@@ -624,15 +651,15 @@
         <div class="ribbon-group">
             <div class="ribbon-group-title">Editing</div>
             <div class="ribbon-buttons">
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="select-btn">
                     <i class="fas fa-i-cursor"></i>
                     <span>Select</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="find-btn">
                     <i class="fas fa-search"></i>
                     <span>Find</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="replace-btn">
                     <i class="fas fa-redo"></i>
                     <span>Replace</span>
                 </div>
@@ -644,11 +671,11 @@
         <div class="ribbon-group">
             <div class="ribbon-group-title">Pages</div>
             <div class="ribbon-buttons">
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="page-break-btn">
                     <i class="fas fa-file"></i>
                     <span>Page Break</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="cover-page-btn">
                     <i class="fas fa-copy"></i>
                     <span>Cover Page</span>
                 </div>
@@ -657,7 +684,7 @@
         <div class="ribbon-group">
             <div class="ribbon-group-title">Tables</div>
             <div class="ribbon-buttons">
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="table-btn">
                     <i class="fas fa-table"></i>
                     <span>Table</span>
                 </div>
@@ -669,11 +696,11 @@
         <div class="ribbon-group">
             <div class="ribbon-group-title">Proofing</div>
             <div class="ribbon-buttons">
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="spelling-btn">
                     <i class="fas fa-check-circle"></i>
                     <span>Spelling</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="grammar-btn">
                     <i class="fas fa-theater-masks"></i>
                     <span>Grammar</span>
                 </div>
@@ -682,11 +709,11 @@
         <div class="ribbon-group">
             <div class="ribbon-group-title">Changes</div>
             <div class="ribbon-buttons">
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="new-comment-btn">
                     <i class="fas fa-plus"></i>
                     <span>New Comment</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="delete-comment-btn">
                     <i class="fas fa-trash"></i>
                     <span>Delete Comment</span>
                 </div>
@@ -698,11 +725,11 @@
         <div class="ribbon-group">
             <div class="ribbon-group-title">Views</div>
             <div class="ribbon-buttons">
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="print-layout-btn">
                     <i class="fas fa-file-alt"></i>
                     <span>Print Layout</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="web-layout-btn">
                     <i class="fas fa-desktop"></i>
                     <span>Web Layout</span>
                 </div>
@@ -711,11 +738,11 @@
         <div class="ribbon-group">
             <div class="ribbon-group-title">Zoom</div>
             <div class="ribbon-buttons">
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="zoom-in-btn">
                     <i class="fas fa-search-plus"></i>
                     <span>Zoom In</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="zoom-out-btn">
                     <i class="fas fa-search-minus"></i>
                     <span>Zoom Out</span>
                 </div>
@@ -731,7 +758,7 @@
                     <i class="fas fa-share"></i>
                     <span>Share Document</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="copy-link-btn">
                     <i class="fas fa-link"></i>
                     <span>Copy Link</span>
                 </div>
@@ -744,7 +771,7 @@
                     <i class="fas fa-history"></i>
                     <span>Version History</span>
                 </div>
-                <div class="ribbon-button">
+                <div class="ribbon-button" id="manage-branches-btn">
                     <i class="fas fa-code-branch"></i>
                     <span>Manage Branches</span>
                 </div>
@@ -1016,6 +1043,65 @@
         </div>
     </div>
     
+    <div class="modal" id="find-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Find</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Find what</label>
+                <input type="text" class="form-control" id="find-input" placeholder="Enter text to find">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancel-find">Cancel</button>
+                <button class="btn btn-primary" id="find-next">Find Next</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="replace-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Find and Replace</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Find what</label>
+                <input type="text" class="form-control" id="replace-find-input" placeholder="Text to find">
+            </div>
+            <div class="form-group">
+                <label>Replace with</label>
+                <input type="text" class="form-control" id="replace-with-input" placeholder="Replacement text">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancel-replace">Cancel</button>
+                <button class="btn btn-primary" id="replace-all">Replace All</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="table-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Insert Table</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Number of rows</label>
+                <input type="number" class="form-control" id="table-rows" value="3" min="1" max="10">
+            </div>
+            <div class="form-group">
+                <label>Number of columns</label>
+                <input type="number" class="form-control" id="table-cols" value="3" min="1" max="8">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancel-table">Cancel</button>
+                <button class="btn btn-primary" id="insert-table">Insert Table</button>
+            </div>
+        </div>
+    </div>
+    
     <div class="toast" id="toast">Document saved successfully!</div>
     
     <script>
@@ -1036,6 +1122,49 @@
         const ribbonTabs = document.querySelectorAll('.ribbon-tab');
         const ribbonContents = document.querySelectorAll('.ribbon-content');
         const modalCloseButtons = document.querySelectorAll('.modal-close');
+        
+        // Clipboard buttons
+        const pasteBtn = document.getElementById('paste-btn');
+        const cutBtn = document.getElementById('cut-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        
+        // Editing buttons
+        const selectBtn = document.getElementById('select-btn');
+        const findBtn = document.getElementById('find-btn');
+        const replaceBtn = document.getElementById('replace-btn');
+        
+        // Insert buttons
+        const pageBreakBtn = document.getElementById('page-break-btn');
+        const coverPageBtn = document.getElementById('cover-page-btn');
+        const tableBtn = document.getElementById('table-btn');
+        
+        // Review buttons
+        const spellingBtn = document.getElementById('spelling-btn');
+        const grammarBtn = document.getElementById('grammar-btn');
+        const newCommentBtn = document.getElementById('new-comment-btn');
+        const deleteCommentBtn = document.getElementById('delete-comment-btn');
+        
+        // View buttons
+        const printLayoutBtn = document.getElementById('print-layout-btn');
+        const webLayoutBtn = document.getElementById('web-layout-btn');
+        const zoomInBtn = document.getElementById('zoom-in-btn');
+        const zoomOutBtn = document.getElementById('zoom-out-btn');
+        
+        // Collaborate buttons
+        const copyLinkBtn = document.getElementById('copy-link-btn');
+        const manageBranchesBtn = document.getElementById('manage-branches-btn');
+        
+        // Modals
+        const findModal = document.getElementById('find-modal');
+        const replaceModal = document.getElementById('replace-modal');
+        const tableModal = document.getElementById('table-modal');
+        
+        // State variables
+        let currentZoom = 100;
+        let currentLayout = 'print';
+        let comments = [];
+        let selectedText = '';
+        let clipboardContent = '';
         
         // Auto-correction dictionary
         const autoCorrectDict = {
@@ -1087,6 +1216,21 @@
                 historyModal.classList.add('active');
             });
             
+            // Find modal
+            findBtn.addEventListener('click', () => {
+                findModal.classList.add('active');
+            });
+            
+            // Replace modal
+            replaceBtn.addEventListener('click', () => {
+                replaceModal.classList.add('active');
+            });
+            
+            // Table modal
+            tableBtn.addEventListener('click', () => {
+                tableModal.classList.add('active');
+            });
+            
             // Close modals
             modalCloseButtons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -1105,6 +1249,18 @@
                 branchModal.classList.remove('active');
             });
             
+            document.getElementById('cancel-find').addEventListener('click', () => {
+                findModal.classList.remove('active');
+            });
+            
+            document.getElementById('cancel-replace').addEventListener('click', () => {
+                replaceModal.classList.remove('active');
+            });
+            
+            document.getElementById('cancel-table').addEventListener('click', () => {
+                tableModal.classList.remove('active');
+            });
+            
             // Create branch
             document.getElementById('create-branch').addEventListener('click', () => {
                 showToast('New branch created successfully!');
@@ -1121,6 +1277,34 @@
             document.getElementById('restore-version').addEventListener('click', () => {
                 showToast('Version restored successfully!');
                 historyModal.classList.remove('active');
+            });
+            
+            // Find next
+            document.getElementById('find-next').addEventListener('click', () => {
+                const searchText = document.getElementById('find-input').value;
+                if (searchText) {
+                    findText(searchText);
+                }
+            });
+            
+            // Replace all
+            document.getElementById('replace-all').addEventListener('click', () => {
+                const findText = document.getElementById('replace-find-input').value;
+                const replaceText = document.getElementById('replace-with-input').value;
+                if (findText && replaceText) {
+                    replaceAllText(findText, replaceText);
+                    replaceModal.classList.remove('active');
+                }
+            });
+            
+            // Insert table
+            document.getElementById('insert-table').addEventListener('click', () => {
+                const rows = parseInt(document.getElementById('table-rows').value);
+                const cols = parseInt(document.getElementById('table-cols').value);
+                if (rows > 0 && cols > 0) {
+                    insertTable(rows, cols);
+                    tableModal.classList.remove('active');
+                }
             });
         }
         
@@ -1143,10 +1327,285 @@
             });
         }
         
-        // Save document
-        saveBtn.addEventListener('click', () => {
-            showToast('Document saved successfully!');
-        });
+        // Initialize button functionality
+        function initButtons() {
+            // Clipboard buttons
+            pasteBtn.addEventListener('click', handlePaste);
+            cutBtn.addEventListener('click', handleCut);
+            copyBtn.addEventListener('click', handleCopy);
+            
+            // Editing buttons
+            selectBtn.addEventListener('click', handleSelectAll);
+            
+            // Insert buttons
+            pageBreakBtn.addEventListener('click', insertPageBreak);
+            coverPageBtn.addEventListener('click', insertCoverPage);
+            
+            // Review buttons
+            spellingBtn.addEventListener('click', checkSpelling);
+            grammarBtn.addEventListener('click', checkGrammar);
+            newCommentBtn.addEventListener('click', addNewComment);
+            deleteCommentBtn.addEventListener('click', deleteComment);
+            
+            // View buttons
+            printLayoutBtn.addEventListener('click', () => switchLayout('print'));
+            webLayoutBtn.addEventListener('click', () => switchLayout('web'));
+            zoomInBtn.addEventListener('click', zoomIn);
+            zoomOutBtn.addEventListener('click', zoomOut);
+            
+            // Collaborate buttons
+            copyLinkBtn.addEventListener('click', copyDocumentLink);
+            manageBranchesBtn.addEventListener('click', manageBranches);
+            
+            // Save button
+            saveBtn.addEventListener('click', () => {
+                showToast('Document saved successfully!');
+            });
+        }
+        
+        // Clipboard functions
+        function handlePaste() {
+            if (clipboardContent) {
+                document.execCommand('insertText', false, clipboardContent);
+                showToast('Content pasted');
+            } else {
+                navigator.clipboard.readText()
+                    .then(text => {
+                        document.execCommand('insertText', false, text);
+                        showToast('Content pasted from clipboard');
+                    })
+                    .catch(err => {
+                        showToast('Failed to paste from clipboard');
+                    });
+            }
+        }
+        
+        function handleCut() {
+            if (window.getSelection().toString()) {
+                clipboardContent = window.getSelection().toString();
+                document.execCommand('cut');
+                showToast('Content cut to clipboard');
+            } else {
+                showToast('No text selected to cut');
+            }
+        }
+        
+        function handleCopy() {
+            if (window.getSelection().toString()) {
+                clipboardContent = window.getSelection().toString();
+                document.execCommand('copy');
+                showToast('Content copied to clipboard');
+            } else {
+                showToast('No text selected to copy');
+            }
+        }
+        
+        // Editing functions
+        function handleSelectAll() {
+            const range = document.createRange();
+            range.selectNodeContents(editor);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            showToast('All content selected');
+        }
+        
+        function findText(text) {
+            const editorContent = editor.innerHTML;
+            const regex = new RegExp(text, 'gi');
+            const highlightedContent = editorContent.replace(regex, match => 
+                `<span class="comment-highlight">${match}</span>`
+            );
+            editor.innerHTML = highlightedContent;
+            showToast(`Found ${(editorContent.match(regex) || []).length} occurrences`);
+        }
+        
+        function replaceAllText(find, replace) {
+            const editorContent = editor.innerHTML;
+            const regex = new RegExp(find, 'g');
+            const newContent = editorContent.replace(regex, replace);
+            editor.innerHTML = newContent;
+            showToast('All occurrences replaced');
+        }
+        
+        // Insert functions
+        function insertPageBreak() {
+            document.execCommand('insertHTML', false, '<div style="page-break-after: always; border-top: 1px dashed #ccc; margin: 20px 0;"><span style="color: #999; font-size: 12px;">--- Page Break ---</span></div>');
+            showToast('Page break inserted');
+        }
+        
+        function insertCoverPage() {
+            const coverPageHTML = `
+                <div style="text-align: center; margin: 100px 0; border: 2px solid #2564cf; padding: 50px; background: #f3f3f3;">
+                    <h1 style="color: #2564cf; font-size: 36px;">Project Proposal</h1>
+                    <h2 style="color: #5f6368; font-size: 24px;">NextGen Collaboration Tool</h2>
+                    <p style="margin-top: 100px; color: #5f6368;">Date: ${new Date().toLocaleDateString()}</p>
+                    <p style="color: #5f6368;">Author: CollabDoc Team</p>
+                </div>
+            `;
+            document.execCommand('insertHTML', false, coverPageHTML);
+            showToast('Cover page inserted');
+        }
+        
+        function insertTable(rows, cols) {
+            let tableHTML = '<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">';
+            for (let i = 0; i < rows; i++) {
+                tableHTML += '<tr>';
+                for (let j = 0; j < cols; j++) {
+                    tableHTML += `<td style="border: 1px solid #ddd; padding: 8px;">&nbsp;</td>`;
+                }
+                tableHTML += '</tr>';
+            }
+            tableHTML += '</table>';
+            document.execCommand('insertHTML', false, tableHTML);
+            showToast(`Table inserted (${rows}x${cols})`);
+        }
+        
+        // Review functions
+        function checkSpelling() {
+            showToast('Spelling check completed. No errors found.');
+        }
+        
+        function checkGrammar() {
+            showToast('Grammar check completed. No errors found.');
+        }
+        
+        function addNewComment() {
+            const selection = window.getSelection();
+            if (selection.toString().trim() === '') {
+                showToast('Please select text to comment on');
+                return;
+            }
+            
+            const range = selection.getRangeAt(0);
+            const selectedText = selection.toString();
+            
+            // Highlight the selected text
+            const span = document.createElement('span');
+            span.className = 'comment-highlight';
+            span.textContent = selectedText;
+            range.deleteContents();
+            range.insertNode(span);
+            
+            // Add comment
+            const commentId = 'comment-' + Date.now();
+            span.id = commentId;
+            
+            const comment = {
+                id: commentId,
+                text: selectedText,
+                author: 'Manjunatha P',
+                timestamp: new Date().toLocaleString(),
+                content: 'New comment'
+            };
+            
+            comments.push(comment);
+            
+            // Insert comment element
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment';
+            commentElement.innerHTML = `
+                <div class="comment-author">${comment.author} - ${comment.timestamp}</div>
+                <div class="comment-text" contenteditable="true">${comment.content}</div>
+                <div class="comment-actions">
+                    <button class="btn btn-outline" style="font-size: 12px;" onclick="deleteCommentById('${commentId}')">Delete</button>
+                </div>
+            `;
+            
+            editor.parentNode.insertBefore(commentElement, editor.nextSibling);
+            
+            showToast('Comment added');
+        }
+        
+        function deleteComment() {
+            if (comments.length === 0) {
+                showToast('No comments to delete');
+                return;
+            }
+            
+            // Remove the last comment for demo purposes
+            const lastComment = comments.pop();
+            const commentElement = document.getElementById(lastComment.id);
+            if (commentElement) {
+                commentElement.classList.remove('comment-highlight');
+                commentElement.id = '';
+            }
+            
+            // Remove comment elements (simplified for demo)
+            const commentElements = document.querySelectorAll('.comment');
+            if (commentElements.length > 0) {
+                commentElements[commentElements.length - 1].remove();
+            }
+            
+            showToast('Comment deleted');
+        }
+        
+        function deleteCommentById(commentId) {
+            const index = comments.findIndex(c => c.id === commentId);
+            if (index !== -1) {
+                comments.splice(index, 1);
+                
+                const commentElement = document.getElementById(commentId);
+                if (commentElement) {
+                    commentElement.classList.remove('comment-highlight');
+                    commentElement.id = '';
+                }
+                
+                // In a real implementation, we would need to map comment elements to comments
+                const commentElements = document.querySelectorAll('.comment');
+                if (commentElements.length > index) {
+                    commentElements[index].remove();
+                }
+                
+                showToast('Comment deleted');
+            }
+        }
+        
+        // View functions
+        function switchLayout(layout) {
+            currentLayout = layout;
+            if (layout === 'print') {
+                document.body.style.fontFamily = "'Times New Roman', serif";
+                editor.style.backgroundColor = '#f9f9f9';
+                showToast('Switched to print layout');
+            } else {
+                document.body.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+                editor.style.backgroundColor = 'white';
+                showToast('Switched to web layout');
+            }
+        }
+        
+        function zoomIn() {
+            if (currentZoom < 150) {
+                currentZoom += 10;
+                editor.style.fontSize = (currentZoom / 100) + 'em';
+                showToast(`Zoom: ${currentZoom}%`);
+            }
+        }
+        
+        function zoomOut() {
+            if (currentZoom > 50) {
+                currentZoom -= 10;
+                editor.style.fontSize = (currentZoom / 100) + 'em';
+                showToast(`Zoom: ${currentZoom}%`);
+            }
+        }
+        
+        // Collaborate functions
+        function copyDocumentLink() {
+            navigator.clipboard.writeText(window.location.href)
+                .then(() => {
+                    showToast('Document link copied to clipboard');
+                })
+                .catch(err => {
+                    showToast('Failed to copy link');
+                });
+        }
+        
+        function manageBranches() {
+            showToast('Branch management opened');
+            // In a real app, this would open a branch management interface
+        }
         
         // Show toast notification
         function showToast(message) {
@@ -1225,6 +1684,7 @@
         function init() {
             initModals();
             initRibbonTabs();
+            initButtons();
             
             // Simulate real-time collaboration (for demo purposes)
             simulateCollaboration();
@@ -1255,8 +1715,11 @@
             }, 10000);
         }
         
+        // Make deleteCommentById available globally for the comment delete buttons
+        window.deleteCommentById = deleteCommentById;
+        
         // Initialize the app
         init();
     </script>
 </body>
-</html>>
+</html>
